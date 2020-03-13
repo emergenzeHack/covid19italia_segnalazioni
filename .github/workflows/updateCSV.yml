@@ -1,0 +1,74 @@
+name: UpdateCSV
+
+on:
+  issues:
+    types: [edited, deleted, labeled, unlabeled]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout emergenzeHack/covid19italia
+      uses: actions/checkout@v2
+      with:
+        repository: emergenzeHack/covid19italia
+
+    - name: Cache gems
+      uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+
+    - name: Cache pips
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip
+
+    - name: Set up Ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.x
+
+    - name: Build
+      run: |
+        gem install bundler
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+        bundle exec jekyll build --trace
+
+    - name: Remove accettato label on broken builds
+      if: failure()
+      run: |
+        url=$(jq -r .issue.repository_url "${GITHUB_EVENT_PATH}")
+        issue_number=$(jq -r .issue.number "${GITHUB_EVENT_PATH}")
+        curl -s -H "Accept:application/vnd.github.v3+json" -H "Authorization:token ${{ secrets.GITHUB_TOKEN }}" -X DELETE "$url/issues/$issue_number/labels/accettato"
+
+    - name: Setup Python 2
+      uses: actions/setup-python@v1.2.0
+      with:
+        python-version: 2.x
+
+    - name: Create CSV, JSON and GeoJSON
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        pip install lxml PyGithub pyyaml
+        python2 scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson
+        sed -i 's/\r$//g' _data/issues.csv
+        git config --local user.name "GitHub Action"
+        git commit -m "auto CSV update $(date -Iseconds)" -- _data/issues.csv _data/issuesjson.json _data/issues.geojson
+
+    - name: Push changes
+      run: |
+        mkdir -m 700 ~/.ssh
+        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_ed25519
+        chmod 0600 ~/.ssh/id_ed25519
+        git pull --rebase
+        pushurl="git@github.com:$(git config --local remote.origin.url | sed 's;^https://github\.com/;;')"
+        git config remote.origin.pushurl "$pushurl"
+        git push
