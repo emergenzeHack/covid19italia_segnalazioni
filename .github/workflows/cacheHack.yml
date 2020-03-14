@@ -1,0 +1,66 @@
+# FIXME This is needed because it's not possible to cache issue jobs
+# Remove this file, delete cachehack branch and rename updateCSV.yml.bak file to
+# updateCSV.yml as soon as github implements cache for issues jobs
+
+name: cacheHack
+
+on:
+  issues:
+    types: [edited, deleted, labeled, unlabeled]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Cancel task if issues is not edited OR changed label is not "accettato"
+      run: |
+        import httplib
+        import json
+        import os
+        import sys
+        import time
+
+        def cancel_task():
+          headers = {"Accept":"application/json",
+                     "Authorization":"token ${{ secrets.GITHUB_TOKEN }}",
+                     "User-Agent":"covid19italia"}
+          conn = httplib.HTTPSConnection("api.github.com")
+          conn.request("POST",
+                       "/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/cancel",
+                       "", headers)
+          response = conn.getresponse()
+          print response.status, response.reason
+          print response.read()
+          time.sleep(10)
+
+
+        with open(os.getenv('GITHUB_EVENT_PATH')) as json_file:
+          data = json.load(json_file)
+          if data['action'] == "labeled" or data['action'] == "unlabeled":
+            if data['label']['name'].lower() != "accettato":
+              cancel_task()
+          else:
+            for label in data['issue']['labels']:
+              if label['name'].lower() == "accettato":
+                break
+            else:
+              cancel_task()
+      shell: python
+
+    - uses: actions/checkout@v2
+      with:
+        ref: cachehack
+        fetch-depth: 0
+
+    - name: Commit GITHUB_EVENT_PATH as event.json
+      run: |
+        mkdir -m 700 ~/.ssh
+        echo "${{ secrets.SELF_PUSH_SSH_KEY }}" > ~/.ssh/id_ed25519
+        chmod 0600 ~/.ssh/id_ed25519
+        pushurl="git@github.com:$(git config --local remote.origin.url | sed 's;^https://github\.com/;;')"
+        cp "${GITHUB_EVENT_PATH}" event.json
+        git config --local user.name "GitHub Action"
+        git commit --amend -m "$(jq -r .issue.title event.json)" event.json
+        git push -f "$pushurl"
