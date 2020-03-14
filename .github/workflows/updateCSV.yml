@@ -12,17 +12,38 @@ jobs:
     steps:
     - name: Cancel task if issues is not edited OR changed label is not "accettato"
       run: |
-        set -x
-        if jq -cer '.action | endswith("labeled")' "${GITHUB_EVENT_PATH}"; then
-          jq -cer '.label.name | ascii_downcase == "accettato"' "${GITHUB_EVENT_PATH}" || cancel=1
-        else
-          jq -cer '.issue.labels[] | select(.name | ascii_downcase == "accettato")' "${GITHUB_EVENT_PATH}" || cancel=1
-        fi
-        if [ "$cancel" = "1" ]; then
-          curl -s -H "application/json" -H "Authorization:token ${{ secrets.GITHUB_TOKEN }}" -X POST \
-            "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/cancel"
-          sleep 60
-        fi
+        import httplib
+        import json
+        import os
+        import sys
+        import time
+
+        def cancel_task():
+          headers = {"Accept":"application/json",
+                     "Authorization":"token ${{ secrets.GITHUB_TOKEN }}",
+                     "User-Agent":"covid19italia"}
+          conn = httplib.HTTPSConnection("api.github.com")
+          conn.request("POST",
+                       "/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/cancel",
+                       "", headers)
+          response = conn.getresponse()
+          print response.status, response.reason
+          print response.read()
+          time.sleep(10)
+
+
+        with open(os.getenv('GITHUB_EVENT_PATH')) as json_file:
+          data = json.load(json_file)
+          if data['action'] == "labeled" or data['action'] == "unlabeled":
+            if data['label']['name'].lower() != "accettato":
+              cancel_task()
+          else:
+            for label in data['issue']['labels']:
+              if label['name'].lower() == "accettato":
+                break
+            else:
+              cancel_task()
+      shell: python
 
     - name: Checkout emergenzeHack/covid19italia
       uses: actions/checkout@v2
@@ -55,8 +76,6 @@ jobs:
         pip install lxml PyGithub pyyaml
         python2 scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson
         sed -i 's/\r$//g' _data/issues.csv
-        git config --local user.name "GitHub Action"
-        git commit -m "auto CSV update $(date -Iseconds)" -- _data/issues.csv _data/issuesjson.json _data/issues.geojson
 
     - name: Set up Ruby 2.6
       uses: actions/setup-ruby@v1
@@ -73,16 +92,37 @@ jobs:
     - name: Remove accettato label on broken builds
       if: failure()
       run: |
-        url=$(jq -r .issue.repository_url "${GITHUB_EVENT_PATH}")
-        issue_number=$(jq -r .issue.number "${GITHUB_EVENT_PATH}")
-        curl -s -H "Accept:application/vnd.github.v3+json" -H "Authorization:token ${{ secrets.GITHUB_TOKEN }}" -X DELETE "$url/issues/$issue_number/labels/accettato"
+        import httplib
+        import json
+        import os
+        with open(os.getenv('GITHUB_EVENT_PATH')) as json_file:
+          data = json.load(json_file)
+          issue_number = data['issue']['number']
+          headers = {"Accept":"application/vnd.github.v3+json",
+                     "Authorization":"token ${{ secrets.GITHUB_TOKEN }}",
+                     "User-Agent":"covid19italia"}
+          conn = httplib.HTTPSConnection("api.github.com")
+          conn.request("DELETE",
+                       "/repos/${{ github.repository }}/issues/{}/labels/accettato".format(issue_number),
+                       "", headers)
+          response = conn.getresponse()
+          print response.status, response.reason
+          print response.read()
+      shell: python
 
-    - name: Push changes
+    - name: Recreate CSV, JSON and GeoJSON and push them
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         mkdir -m 700 ~/.ssh
         echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_ed25519
         chmod 0600 ~/.ssh/id_ed25519
-        git pull --rebase
         pushurl="git@github.com:$(git config --local remote.origin.url | sed 's;^https://github\.com/;;')"
         git config remote.origin.pushurl "$pushurl"
+        git fetch origin
+        git reset --hard origin/master
+        python2 scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson
+        sed -i 's/\r$//g' _data/issues.csv
+        git config --local user.name "GitHub Action"
+        git commit -m "auto CSV update $(date -Iseconds)" -- _data/issues.csv _data/issuesjson.json _data/issues.geojson
         git push
