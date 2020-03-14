@@ -1,0 +1,103 @@
+name: UpdateCSV
+
+on:
+  push:
+    branches: [cachehack]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout emergenzeHack/covid19italia
+      uses: actions/checkout@v2
+      with:
+        repository: emergenzeHack/covid19italia
+
+    - name: Checkout emergenzeHack/covid19italia_data
+      uses: actions/checkout@v2
+      with:
+          path: _data
+
+    - name: Checkout emergenzeHack/covid19italia_segnalazioni
+      uses: actions/checkout@v2
+      with:
+        path: covid19italia_segnalazioni
+
+    - name: Cache gems
+      uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+
+    - name: Cache pips
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip
+
+    - uses: actions/setup-python@v1.2.0
+      with:
+        python-version: 3.x
+
+    - name: Create CSV, JSON and GeoJSON
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        pip install lxml PyGithub pyyaml
+        scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson
+        sed -i 's/\r$//g' _data/issues.csv
+
+    - name: Set up Ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.x
+
+    - name: Build
+      run: |
+        gem install bundler
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+        bundle exec jekyll build --trace
+
+    - name: Remove accettato label on broken builds
+      if: failure()
+      run: |
+        import http.client
+        import json
+        import os
+        with open('covid19italia_segnalazioni/event.json') as json_file:
+          data = json.load(json_file)
+          issue_number = data['issue']['number']
+          headers = {"Accept":"application/vnd.github.v3+json",
+                     "Authorization":"token ${{ secrets.GITHUB_TOKEN }}",
+                     "User-Agent":"covid19italia"}
+          conn = http.client.HTTPSConnection("api.github.com")
+          conn.request("DELETE",
+                       "/repos/${{ github.repository }}/issues/{}/labels/accettato".format(issue_number),
+                       "", headers)
+          response = conn.getresponse()
+          print response.status, response.reason
+          print response.read()
+      shell: python
+
+    - name: Recreate CSV, JSON and GeoJSON and push them
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      working-directory:
+        _data/
+      run: |
+        mkdir -m 700 ~/.ssh
+        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_ed25519
+        chmod 0600 ~/.ssh/id_ed25519
+        pushurl="git@github.com:$(git config --local remote.origin.url | sed 's;^https://github\.com/;;')"
+        git config remote.origin.pushurl "$pushurl"
+        git fetch origin
+        git reset --hard origin/master
+        ../scripts/github2CSV.py issues.csv issuesjson.json issues.geojson
+        sed -i 's/\r$//g' issues.csv
+        git config --local user.name "GitHub Action"
+        git commit -m "auto CSV update $(date -Iseconds)" -- issues.csv issuesjson.json issues.geojson && git push || :
