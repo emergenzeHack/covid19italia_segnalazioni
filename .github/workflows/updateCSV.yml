@@ -43,6 +43,21 @@ jobs:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip
 
+    - name: Setup Python 2
+      uses: actions/setup-python@v1.2.0
+      with:
+        python-version: 2.x
+
+    - name: Create CSV, JSON and GeoJSON
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        pip install lxml PyGithub pyyaml
+        python2 scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson
+        sed -i 's/\r$//g' _data/issues.csv
+        git config --local user.name "GitHub Action"
+        git commit -m "auto CSV update $(date -Iseconds)" -- _data/issues.csv _data/issuesjson.json _data/issues.geojson
+
     - name: Set up Ruby 2.6
       uses: actions/setup-ruby@v1
       with:
@@ -61,21 +76,6 @@ jobs:
         url=$(jq -r .issue.repository_url "${GITHUB_EVENT_PATH}")
         issue_number=$(jq -r .issue.number "${GITHUB_EVENT_PATH}")
         curl -s -H "Accept:application/vnd.github.v3+json" -H "Authorization:token ${{ secrets.GITHUB_TOKEN }}" -X DELETE "$url/issues/$issue_number/labels/accettato"
-
-    - name: Setup Python 2
-      uses: actions/setup-python@v1.2.0
-      with:
-        python-version: 2.x
-
-    - name: Create CSV, JSON and GeoJSON
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        pip install lxml PyGithub pyyaml
-        python2 scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson
-        sed -i 's/\r$//g' _data/issues.csv
-        git config --local user.name "GitHub Action"
-        git commit -m "auto CSV update $(date -Iseconds)" -- _data/issues.csv _data/issuesjson.json _data/issues.geojson
 
     - name: Push changes
       run: |
