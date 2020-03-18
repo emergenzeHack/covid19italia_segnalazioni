@@ -51,14 +51,14 @@ jobs:
         scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson _utilities
         sed -i 's/\r$//g' _data/issues.csv
 
-    - name: Set up Ruby 2.6
+    - name: Set up Ruby 2.7
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 2.6.x
+        ruby-version: 2.7.x
 
     - name: Build
       run: |
-        gem install bundler
+        gem install bundler:1.17.3
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
         bundle exec jekyll build --trace
