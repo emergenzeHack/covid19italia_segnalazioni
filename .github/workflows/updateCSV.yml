@@ -48,7 +48,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         pip install lxml PyGithub pyyaml shapely pandas geopandas
-        scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson
+        scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson _utilities
         sed -i 's/\r$//g' _data/issues.csv
 
     - name: Set up Ruby 2.6
@@ -97,7 +97,7 @@ jobs:
         git config remote.origin.pushurl "$pushurl"
         git fetch origin
         git reset --hard origin/master
-        ../scripts/github2CSV.py issues.csv issuesjson.json issues.geojson
+        ../scripts/github2CSV.py issues.csv issuesjson.json issues.geojson ../utilities
         sed -i 's/\r$//g' issues.csv
         git config --local user.name "GitHub Action"
         git commit -m "auto CSV update $(date -Iseconds)" -- issues.csv issuesjson.json issues.geojson && git push || :
