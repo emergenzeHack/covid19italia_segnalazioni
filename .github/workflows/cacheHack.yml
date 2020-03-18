@@ -16,11 +16,8 @@ jobs:
     steps:
     - name: Skip task if issues is not edited OR changed label is not "accettato"
       run: |
-        import httplib
         import json
         import os
-        import sys
-        import time
 
         with open(os.getenv('GITHUB_EVENT_PATH')) as json_file:
           data = json.load(json_file)
