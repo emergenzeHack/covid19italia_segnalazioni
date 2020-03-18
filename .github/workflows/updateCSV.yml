@@ -29,15 +29,15 @@ jobs:
       uses: actions/cache@v1
       with:
         path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        key: ${{ runner.os }}-2.6.x-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
-          ${{ runner.os }}-gems-
+          ${{ runner.os }}-2.6.x-gems-
 
     - name: Cache pips
       uses: actions/cache@v1
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip
+        key: ${{ runner.os }}-3.x-pip
 
     - uses: actions/setup-python@v1.2.0
       with:
@@ -50,10 +50,10 @@ jobs:
         pip install lxml PyGithub pyyaml shapely pandas geopandas
         scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson _utilities
 
-    - name: Set up Ruby 2.7
+    - name: Set up Ruby 2.6
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 2.7.x
+        ruby-version: 2.6.x
 
     - name: Build
       run: |
