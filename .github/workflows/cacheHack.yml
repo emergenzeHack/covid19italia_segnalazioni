@@ -40,7 +40,7 @@ jobs:
       shell: python
       id: skip
 
-    - run: pip install pyyaml
+    - run: pip install pyyaml lxml
       if: steps.skip.outputs.skip != 'true'
 
     - name: Verify that yamldata is ok
@@ -51,15 +51,16 @@ jobs:
         import yaml
         import os
         import sys
-        import xml.etree.ElementTree as ET
+        from lxml import html
 
         with open(os.getenv('GITHUB_EVENT_PATH')) as json_file:
           try:
             data = json.load(json_file)
             body = data['issue']['body']
-            root = ET.fromstring(body)
-            yamldata = root.find('yamldata').text
-            yaml.safe_load(yamldata)
+            tree = html.fromstring(body)
+            yamldataRaw=tree.xpath("//yamldata/text()")
+            yamldataStr=yamldataRaw[0] if len(yamldataRaw) > 0 else None
+            yaml.safe_load(yamldataStr)
           except Exception as e:
             issue_number = data['issue']['number']
             headers = {"Accept":"application/vnd.github.v3+json",
