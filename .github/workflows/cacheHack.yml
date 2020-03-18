@@ -50,6 +50,7 @@ jobs:
         import json
         import yaml
         import os
+        import sys
         import xml.etree.ElementTree as ET
 
         with open(os.getenv('GITHUB_EVENT_PATH')) as json_file:
@@ -59,7 +60,7 @@ jobs:
             root = ET.fromstring(body)
             yamldata = root.find('yamldata').text
             yaml.safe_load(yamldata)
-          except:
+          except Exception as e:
             issue_number = data['issue']['number']
             headers = {"Accept":"application/vnd.github.v3+json",
                       "Authorization":"token ${{ secrets.GITHUB_TOKEN }}",
@@ -68,6 +69,12 @@ jobs:
             conn.request("DELETE",
                         "/repos/${{ github.repository }}/issues/{}/labels/accettato".format(issue_number),
                         "", headers)
+            response = conn.getresponse()
+            error = f"```\n{str(e)}\n```"
+            params = json.dumps({"body":error})
+            conn.request("POST",
+                        "/repos/${{ github.repository }}/issues/{}/comments".format(issue_number),
+                        params, headers)
             response = conn.getresponse()
             print(response.status, response.reason)
             print(response.read())
