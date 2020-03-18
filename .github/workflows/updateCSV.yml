@@ -79,8 +79,8 @@ jobs:
                        "/repos/${{ github.repository }}/issues/{}/labels/accettato".format(issue_number),
                        "", headers)
           response = conn.getresponse()
-          print response.status, response.reason
-          print response.read()
+          print(response.status, response.reason)
+          print(response.read())
       shell: python
 
     - name: Recreate CSV, JSON and GeoJSON and push them
