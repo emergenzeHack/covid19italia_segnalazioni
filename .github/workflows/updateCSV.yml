@@ -97,7 +97,7 @@ jobs:
         git config remote.origin.pushurl "$pushurl"
         git fetch origin
         git reset --hard origin/master
-        ../scripts/github2CSV.py issues.csv issuesjson.json issues.geojson ../utilities
+        ../scripts/github2CSV.py issues.csv issuesjson.json issues.geojson ../_utilities
         sed -i 's/\r$//g' issues.csv
         git config --local user.name "GitHub Action"
         git commit -m "auto CSV update $(date -Iseconds)" -- issues.csv issuesjson.json issues.geojson && git push || :
