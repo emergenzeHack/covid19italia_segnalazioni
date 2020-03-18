@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Cancel task if issues is not edited OR changed label is not "accettato"
+    - name: Skip task if issues is not edited OR changed label is not "accettato"
       run: |
         import httplib
         import json
@@ -22,39 +22,31 @@ jobs:
         import sys
         import time
 
-        def cancel_task():
-          headers = {"Accept":"application/json",
-                     "Authorization":"token ${{ secrets.GITHUB_TOKEN }}",
-                     "User-Agent":"covid19italia"}
-          conn = httplib.HTTPSConnection("api.github.com")
-          conn.request("POST",
-                       "/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/cancel",
-                       "", headers)
-          response = conn.getresponse()
-          print response.status, response.reason
-          print response.read()
-          time.sleep(10)
-
-
         with open(os.getenv('GITHUB_EVENT_PATH')) as json_file:
           data = json.load(json_file)
           if data['action'] == "labeled" or data['action'] == "unlabeled":
-            if data['label']['name'].lower() != "accettato":
-              cancel_task()
+            if data['label']['name'].lower() == "accettato":
+              print("::set-output name=skip::false")
+            else:
+              print("::set-output name=skip::true")
           else:
             for label in data['issue']['labels']:
               if label['name'].lower() == "accettato":
+                print("::set-output name=skip::false")
                 break
             else:
-              cancel_task()
+              print("::set-output name=skip::true")
       shell: python
+      id: skip
 
     - uses: actions/checkout@v2
+      if: steps.skip.outputs.skip != 'true'
       with:
         ref: cachehack
         fetch-depth: 0
 
     - name: Commit GITHUB_EVENT_PATH as event.json
+      if: steps.skip.outputs.skip != 'true'
       run: |
         mkdir -m 700 ~/.ssh
         echo "${{ secrets.SELF_PUSH_SSH_KEY }}" > ~/.ssh/id_ed25519
