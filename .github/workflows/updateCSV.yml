@@ -47,7 +47,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        pip install lxml PyGithub pyyaml
+        pip install lxml PyGithub pyyaml shapely pandas geopandas
         scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson
         sed -i 's/\r$//g' _data/issues.csv
 
