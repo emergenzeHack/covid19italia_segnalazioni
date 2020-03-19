@@ -18,7 +18,8 @@ jobs:
     - name: Checkout emergenzeHack/covid19italia_data
       uses: actions/checkout@v2
       with:
-          path: _data
+        repository: emergenzeHack/covid19italia_data
+        path: _data
 
     - name: Checkout emergenzeHack/covid19italia_segnalazioni
       uses: actions/checkout@v2
