@@ -123,6 +123,7 @@ jobs:
         git reset --hard origin/master
         python2 scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson
         sed -i 's/\r$//g' _data/issues.csv
-        git config --local user.name "GitHub Action"
-        git commit -m "auto CSV update $(date -Iseconds)" -- _data/issues.csv _data/issuesjson.json _data/issues.geojson
+        git config --local user.name "ehack-italy"
+        git config --local user.email "62019251+ehack-italy@users.noreply.github.com"
+        git commit -m "Aggiornamento automatico dati CSV $(date -Iseconds)" -- _data/issues.csv _data/issuesjson.json _data/issues.geojson
         git push
