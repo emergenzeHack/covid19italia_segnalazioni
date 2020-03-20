@@ -44,45 +44,11 @@ jobs:
       with:
         python-version: 3.x
 
-    - name: Create CSV, JSON and GeoJSON
+    - name: Install packages with pip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         pip install lxml PyGithub pyyaml shapely pandas geopandas
-        scripts/github2CSV.py _data/issues.csv _data/issuesjson.json _data/issues.geojson _utilities
-
-    - name: Set up Ruby 2.6
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: 2.6.x
-
-    - name: Build
-      run: |
-        gem install bundler:1.17.3
-        bundle config path vendor/bundle
-        bundle install --jobs 4 --retry 3
-        bundle exec jekyll build --trace
-
-    - name: Remove accettato label on broken builds
-      if: failure()
-      run: |
-        import http.client
-        import json
-        import os
-        with open('covid19italia_segnalazioni/event.json') as json_file:
-          data = json.load(json_file)
-          issue_number = data['issue']['number']
-          headers = {"Accept":"application/vnd.github.v3+json",
-                     "Authorization":"token ${{ secrets.GITHUB_TOKEN }}",
-                     "User-Agent":"covid19italia"}
-          conn = http.client.HTTPSConnection("api.github.com")
-          conn.request("DELETE",
-                       "/repos/${{ github.repository }}/issues/{}/labels/accettato".format(issue_number),
-                       "", headers)
-          response = conn.getresponse()
-          print(response.status, response.reason)
-          print(response.read())
-      shell: python
 
     - name: Recreate CSV, JSON and GeoJSON and push them
       env:
