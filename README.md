@@ -7,3 +7,5 @@ Per favore, utilizza gli appositi moduli che trovi [qui](https://www.covid19ital
 Questo repository è per gestire le segnalazioni di covid19italia tramite Issues di GitHub, come spiegato sulla [wiki](https://github.com/emergenzeHack/covid19italia/wiki/Lavorare-sulle-segnalazioni).
 
 Non si tratta di repository adibito a codice.
+
+Controllare il branch "cacheHack" per la GitHub action che innesca le generazioni dei CSV.
