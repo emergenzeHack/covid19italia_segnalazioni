@@ -15,16 +15,16 @@ jobs:
       with:
         repository: emergenzeHack/covid19italia
 
-    - name: Checkout emergenzeHack/covid19italia_data
-      uses: actions/checkout@v2
-      with:
-        repository: emergenzeHack/covid19italia_data
-        path: _data
+    - name: Get data repository name
+      run: |
+        echo "::set-output name=repo::${GITHUB_REPOSITORY%_*}_data"
+      id: get_data_repo
 
-    - name: Checkout emergenzeHack/covid19italia_segnalazioni
+    - name: Checkout ${{steps.get_data_repo.outputs.repo }}
       uses: actions/checkout@v2
       with:
-        path: covid19italia_segnalazioni
+        repository: ${{steps.get_data_repo.outputs.repo }}
+        path: _data
 
     - name: Cache gems
       uses: actions/cache@v1
