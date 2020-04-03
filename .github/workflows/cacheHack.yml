@@ -18,7 +18,7 @@ jobs:
       with:
         python-version: 3.x
 
-    - name: Skip task if issues is not edited OR changed label is not "accettato"
+    - name: Skip task if issues is not edited OR changed label is not "accepted"
       run: |
         import json
         import os
@@ -26,13 +26,13 @@ jobs:
         with open(os.getenv('GITHUB_EVENT_PATH')) as json_file:
           data = json.load(json_file)
           if data['action'] == "labeled" or data['action'] == "unlabeled":
-            if data['label']['name'].lower() == "accettato":
+            if data['label']['name'].lower() == "${{ secrets.ACCEPTED_LABEL }}":
               print("::set-output name=skip::false")
             else:
               print("::set-output name=skip::true")
           else:
             for label in data['issue']['labels']:
-              if label['name'].lower() == "accettato":
+              if label['name'].lower() == "${{ secrets.ACCEPTED_LABEL }}":
                 print("::set-output name=skip::false")
                 break
             else:
@@ -64,11 +64,11 @@ jobs:
           except Exception as e:
             issue_number = data['issue']['number']
             headers = {"Accept":"application/vnd.github.v3+json",
-                      "Authorization":"token ${{ secrets.GITHUB_TOKEN }}",
-                      "User-Agent":"covid19italia"}
+                       "Authorization":"token ${{ secrets.GITHUB_TOKEN }}",
+                       "User-Agent":"covid19italia"}
             conn = http.client.HTTPSConnection("api.github.com")
             conn.request("DELETE",
-                        "/repos/${{ github.repository }}/issues/{}/labels/accettato".format(issue_number),
+                        "/repos/${{ github.repository }}/issues/{}/labels/${{ secrets.ACCEPTED_LABEL }}".format(issue_number),
                         "", headers)
             response = conn.getresponse()
             error = f"```\n{str(e)}\n```"
