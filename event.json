@@ -1,49 +1,36 @@
 {
-  "action": "edited",
-  "changes": {
-    "body": {
-      "from": "<pre><yamldata>\r\nDa_chi_offerta: Università Bocconi e Università di Harvard\r\nDescrizione: \"Progetto TOP (Tutoring Online Project)\\n\\\r\n  \\n \\n\\nSiamo un team di ricercatori dell’Università Bocconi e dell’Università di\\\r\n  \\ Harvard. Stiamo cercando di aiutare le scuole medie italiane a trovare tutor per\\\r\n  \\ gli studenti in difficoltà durante queste settimane di chiusura delle scuole.\\\r\n  \\ A questa iniziativa partecipano anche l’Università Bicocca, l’Università Statale\\\r\n  \\ di Milano e altre Università.\\n\\n \\n\\nQuesta fase di attività didattiche online\\\r\n  \\ rappresenta una sfida molto difficile da affrontare per le scuole e le famiglie\\\r\n  \\ italiane. Numerose ricerche suggeriscono che l’istruzione online può avere conseguenze\\\r\n  \\ negative per l’apprendimento di studenti le cui famiglie non possono supportarli\\\r\n  \\ nella didattica a distanza, andando cosi a incrementare le disuguaglianze.\\\r\n  \\ \\n\\nSei interessato/a ad aiutare dei ragazzi delle scuole medie attualmente in\\\r\n  \\ difficoltà a fare i compiti e rimanere al passo con il resto della classe? Se\\\r\n  \\ sì, il progetto TOP fa per te!\\n\\nL’impegno previsto è di 3 ore alla settimana\\\r\n  \\ per ciascun modulo di tutoring (potrai scegliere se offrire uno o più moduli).\\\r\n  \\ La durata è per il periodo di chiusura delle scuole, e comunque non oltre la fine\\\r\n  \\ di Maggio.\\n\\n \\n\\nI presidi e gli insegnanti delle scuole identificheranno i\\\r\n  \\ ragazzi più bisognosi di un sostegno, e noi metteremo in contatto i tutor con\\\r\n  \\ le scuole, in base alle necessità e alla disponibilità espresse. L’impatto dell’attività\\\r\n  \\ fatta con il tutor verrà valutato in un progetto di ricerca scientifica.\\n\\n \\n\\\r\n  \\nVuoi aderire? Può essere un bel modo di dare una mano in questa situazione di\\\r\n  \\ emergenza! Per ulteriori informazioni inviare una email a bicoccaconlescuole@unimib.it\"\r\nDestinatari: Studenti/Studentesse\r\nEmail: bicoccaconlescuole@unimib.it\r\nLink: https://www.unimib.it/sites/default/files/allegati/progetto_tutor-bicocca_31.03.2020.pdf\r\nNatura: didattica\r\nTitolo: Progetto TOP (Tutoring Online Project)\r\nPosizione: 45.5183542 9.2139472\r\nregione_manuale: tutte\r\n</yamldata></pre>"
-    }
-  },
+  "action": "labeled",
   "issue": {
+    "active_lock_reason": null,
     "assignee": null,
     "assignees": [],
     "author_association": "MEMBER",
-    "body": "<pre><yamldata>\r\nDa_chi_offerta: Università Bocconi e Università di Harvard\r\nDescrizione: \"Progetto TOP (Tutoring Online Project)\\n\\\r\n  \\n \\n\\nSiamo un team di ricercatori dell’Università Bocconi e dell’Università di\\\r\n  \\ Harvard. Stiamo cercando di aiutare le scuole medie italiane a trovare tutor per\\\r\n  \\ gli studenti in difficoltà durante queste settimane di chiusura delle scuole.\\\r\n  \\ A questa iniziativa partecipano anche l’Università Bicocca, l’Università Statale\\\r\n  \\ di Milano e altre Università.\\n\\n \\n\\nQuesta fase di attività didattiche online\\\r\n  \\ rappresenta una sfida molto difficile da affrontare per le scuole e le famiglie\\\r\n  \\ italiane. Numerose ricerche suggeriscono che l’istruzione online può avere conseguenze\\\r\n  \\ negative per l’apprendimento di studenti le cui famiglie non possono supportarli\\\r\n  \\ nella didattica a distanza, andando cosi a incrementare le disuguaglianze.\\\r\n  \\ \\n\\nSei interessato/a ad aiutare dei ragazzi delle scuole medie attualmente in\\\r\n  \\ difficoltà a fare i compiti e rimanere al passo con il resto della classe? Se\\\r\n  \\ sì, il progetto TOP fa per te!\\n\\nL’impegno previsto è di 3 ore alla settimana\\\r\n  \\ per ciascun modulo di tutoring (potrai scegliere se offrire uno o più moduli).\\\r\n  \\ La durata è per il periodo di chiusura delle scuole, e comunque non oltre la fine\\\r\n  \\ di Maggio.\\n\\n \\n\\nI presidi e gli insegnanti delle scuole identificheranno i\\\r\n  \\ ragazzi più bisognosi di un sostegno, e noi metteremo in contatto i tutor con\\\r\n  \\ le scuole, in base alle necessità e alla disponibilità espresse. L’impatto dell’attività\\\r\n  \\ fatta con il tutor verrà valutato in un progetto di ricerca scientifica.\\n\\n \\n\\\r\n  \\nVuoi aderire? Può essere un bel modo di dare una mano in questa situazione di\\\r\n  \\ emergenza! \r\nPer ulteriori informazioni inviare una email a bicoccaconlescuole@unimib.it\"\r\nDestinatari: Studenti/Studentesse\r\nLink: https://www.unimib.it/sites/default/files/allegati/progetto_tutor-bicocca_31.03.2020.pdf\r\nNatura: didattica\r\nTitolo: Progetto TOP (Tutoring Online Project)\r\nPosizione: 45.5183542 9.2139472\r\nregione_manuale: tutte\r\n</yamldata></pre>",
+    "body": "<pre><yamldata>\r\nCosa: '#TamponeSospeso Dal 6 al 7 marzo a Milano tamponi gratuiti offerti da Brigate\r\n  volontarie per l’emergenza'\r\nDescrizione: \"Prenotazioni #TamponeSospesoMilano: questa settimana il servizio sarà\\\r\n  \\ attivo sabato 6 e domenica 7 marzo, dalle ore 11 alle 14 e dalle 15 alle 17:30,\\\r\n  \\ presso ARCI L’Umanitaria, Via Solari 40.\\n\\nPer maggiori informazioni e prenotazioni:\\\r\n  \\ tamponesospeso@gmail.com\\n +39 351 8601561, dalle 11 alle 16 (anche tramite WhatsApp)\\n\\\r\n  \\nPer sostenere la campagna: https://www.produzionidalbasso.com/project/sostieni-la-brigata-sanitaria-soccorso-rosso/\"\r\nDestinatari: Persone in difficoltà economica.\r\nEmail: tamponesospeso@gmail.com\r\nLink: https://t.me/brigatevolontarieGruppoPubblico/3400\r\nTelefono: 351 8601561\r\nPosizione: ARCI L’Umanitaria, Via Solari 40\r\n</yamldata></pre>",
     "closed_at": null,
-    "comments": 0,
-    "comments_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/issues/2252/comments",
-    "created_at": "2020-04-04T13:57:59Z",
-    "events_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/issues/2252/events",
-    "html_url": "https://github.com/emergenzeHack/covid19italia_segnalazioni/issues/2252",
-    "id": 593875624,
+    "comments": 1,
+    "comments_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/issues/4238/comments",
+    "created_at": "2021-03-03T09:05:23Z",
+    "events_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/issues/4238/events",
+    "html_url": "https://github.com/emergenzeHack/covid19italia_segnalazioni/issues/4238",
+    "id": 820904113,
     "labels": [
       {
-        "color": "3f79a3",
+        "color": "5952ea",
         "default": false,
         "description": "",
-        "id": 1902732826,
-        "name": "Bollettino",
-        "node_id": "MDU6TGFiZWwxOTAyNzMyODI2",
-        "url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/labels/Bollettino"
+        "id": 1901236952,
+        "name": "Donazioni beni e offerte servizi",
+        "node_id": "MDU6TGFiZWwxOTAxMjM2OTUy",
+        "url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/labels/Donazioni%20beni%20e%20offerte%20servizi"
       },
       {
-        "color": "98c5f2",
+        "color": "80f7ed",
         "default": false,
         "description": "",
-        "id": 1897446778,
-        "name": "Didattica a distanza e-learning",
-        "node_id": "MDU6TGFiZWwxODk3NDQ2Nzc4",
-        "url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/labels/Didattica%20a%20distanza%20e-learning"
-      },
-      {
-        "color": "2d18ba",
-        "default": false,
-        "description": "",
-        "id": 1897446151,
-        "name": "Richiesta aiuto",
-        "node_id": "MDU6TGFiZWwxODk3NDQ2MTUx",
-        "url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/labels/Richiesta%20aiuto"
+        "id": 1898675388,
+        "name": "Servizi e iniziative solidali private",
+        "node_id": "MDU6TGFiZWwxODk4Njc1Mzg4",
+        "url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/labels/Servizi%20e%20iniziative%20solidali%20private"
       },
       {
         "color": "8fea10",
@@ -64,18 +51,19 @@
         "url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/labels/form"
       }
     ],
-    "labels_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/issues/2252/labels{/name}",
+    "labels_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/issues/4238/labels{/name}",
     "locked": false,
     "milestone": null,
-    "node_id": "MDU6SXNzdWU1OTM4NzU2MjQ=",
-    "number": 2252,
+    "node_id": "MDU6SXNzdWU4MjA5MDQxMTM=",
+    "number": 4238,
+    "performed_via_github_app": null,
     "repository_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni",
     "state": "open",
-    "title": "Università Bicocca e Harvard cercano volontari per Progetto TOP (Tutoring Online Project): tutoraggio a distanza degli studenti svantaggiati delle scuole medie ",
-    "updated_at": "2020-04-05T10:01:42Z",
-    "url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/issues/2252",
+    "title": "TamponeSospeso Dal 6 al 7 marzo a #Milano torna il servizio di tamponi gratuiti promosso dalle Brigate volontarie per l’emergenza",
+    "updated_at": "2021-03-03T09:07:33Z",
+    "url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/issues/4238",
     "user": {
-      "avatar_url": "https://avatars3.githubusercontent.com/u/62019251?v=4",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62019251?v=4",
       "events_url": "https://api.github.com/users/ehack-italy/events{/privacy}",
       "followers_url": "https://api.github.com/users/ehack-italy/followers",
       "following_url": "https://api.github.com/users/ehack-italy/following{/other_user}",
@@ -95,9 +83,18 @@
       "url": "https://api.github.com/users/ehack-italy"
     }
   },
+  "label": {
+    "color": "8fea10",
+    "default": false,
+    "description": "",
+    "id": 1897424674,
+    "name": "accettato",
+    "node_id": "MDU6TGFiZWwxODk3NDI0Njc0",
+    "url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/labels/accettato"
+  },
   "organization": {
-    "avatar_url": "https://avatars1.githubusercontent.com/u/9900828?v=4",
-    "description": "Facing emergencies with open source and civic hacking, tansforming data into collective knowledge.",
+    "avatar_url": "https://avatars.githubusercontent.com/u/9900828?v=4",
+    "description": "Facing emergencies with open source and civic hacking, transforming data into collective knowledge.",
     "events_url": "https://api.github.com/orgs/emergenzeHack/events",
     "hooks_url": "https://api.github.com/orgs/emergenzeHack/hooks",
     "id": 9900828,
@@ -130,8 +127,8 @@
     "downloads_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/downloads",
     "events_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/events",
     "fork": false,
-    "forks": 2,
-    "forks_count": 2,
+    "forks": 5,
+    "forks_count": 5,
     "forks_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/forks",
     "full_name": "emergenzeHack/covid19italia_segnalazioni",
     "git_commits_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/git/commits{/sha}",
@@ -161,10 +158,10 @@
     "name": "covid19italia_segnalazioni",
     "node_id": "MDEwOlJlcG9zaXRvcnkyNDU4OTQwMTA=",
     "notifications_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/notifications{?since,all,participating}",
-    "open_issues": 1596,
-    "open_issues_count": 1596,
+    "open_issues": 2883,
+    "open_issues_count": 2883,
     "owner": {
-      "avatar_url": "https://avatars1.githubusercontent.com/u/9900828?v=4",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9900828?v=4",
       "events_url": "https://api.github.com/users/emergenzeHack/events{/privacy}",
       "followers_url": "https://api.github.com/users/emergenzeHack/followers",
       "following_url": "https://api.github.com/users/emergenzeHack/following{/other_user}",
@@ -185,11 +182,11 @@
     },
     "private": false,
     "pulls_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/pulls{/number}",
-    "pushed_at": "2020-04-05T09:54:52Z",
+    "pushed_at": "2021-03-03T08:55:59Z",
     "releases_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/releases{/id}",
-    "size": 24,
+    "size": 31,
     "ssh_url": "git@github.com:emergenzeHack/covid19italia_segnalazioni.git",
-    "stargazers_count": 3,
+    "stargazers_count": 6,
     "stargazers_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/stargazers",
     "statuses_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/statuses/{sha}",
     "subscribers_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/subscribers",
@@ -198,13 +195,13 @@
     "tags_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/tags",
     "teams_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/teams",
     "trees_url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni/git/trees{/sha}",
-    "updated_at": "2020-04-04T12:51:07Z",
+    "updated_at": "2021-01-27T12:12:30Z",
     "url": "https://api.github.com/repos/emergenzeHack/covid19italia_segnalazioni",
-    "watchers": 3,
-    "watchers_count": 3
+    "watchers": 6,
+    "watchers_count": 6
   },
   "sender": {
-    "avatar_url": "https://avatars3.githubusercontent.com/u/21283775?v=4",
+    "avatar_url": "https://avatars.githubusercontent.com/u/21283775?v=4",
     "events_url": "https://api.github.com/users/cristigalas/events{/privacy}",
     "followers_url": "https://api.github.com/users/cristigalas/followers",
     "following_url": "https://api.github.com/users/cristigalas/following{/other_user}",
