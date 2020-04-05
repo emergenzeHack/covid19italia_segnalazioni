@@ -24,7 +24,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: ${{steps.get_data_repo.outputs.repo }}
-        path: _data
+        path: _data/machgen
 
     - name: Cache gems
       uses: actions/cache@v1
@@ -54,7 +54,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       working-directory:
-        _data/
+        _data/machgen
       run: |
         mkdir -m 700 ~/.ssh
         echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_ed25519
@@ -63,7 +63,7 @@ jobs:
         git config remote.origin.pushurl "$pushurl"
         git fetch origin
         git reset --hard origin/master
-        ../scripts/github2CSV.py issues.csv issuesjson.json issues.geojson ../_utilities ${{ secrets.ACCEPTED_LABEL }}
+        ../../scripts/github2CSV.py issues.csv issuesjson.json issues.geojson ../_utilities ${{ secrets.ACCEPTED_LABEL }}
         git config --local user.name "ehack-italy"
         git config --local user.email "62019251+ehack-italy@users.noreply.github.com"
         git commit -m "Aggiorno automaticamente dati $(date -Iseconds)" -- issues.csv issuesjson.json issues.geojson && git push || :
