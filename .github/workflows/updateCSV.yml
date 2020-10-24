@@ -7,7 +7,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout emergenzeHack/covid19italia
@@ -48,6 +48,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        echo 'deb http://archive.ubuntu.com/ubuntu bionic-backports main universe multiverse restricted' | sudo tee -a /etc/apt/sources.list
+        sudo apt-get update
+        sudo apt-get install libgeos-dev
+        sudo apt-get install proj-bin
+        sudo apt-get install libgdal-dev
         pip install lxml PyGithub pyyaml shapely pandas geopandas
 
     - name: Recreate CSV, JSON and GeoJSON and push them
